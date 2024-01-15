@@ -60,31 +60,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const { user } = req;
     const userId = user.dataValues.id
 
-/*     const spotsOwnedByUser = await User.findByPk(userId, {
-        attributes: ['id'],
-        include: [
-            {
-                model: Spot,
-                include: [
-                    {
-                        model: Review,
-                        attributes: [[
-                            sequelize.fn('AVG', sequelize.col('stars')), 'avgRating'
-                        ]]
-                    },
-                    {
-                        model: SpotImage,
-                        attributes: ['url'],
-                        where: {preview: true},
-                        limit: 1
-                    }
-                ],
-                group: ['Spot.id']
-            }
-        ],
-    })
- */
-
     const spotsOwnedByUser = await Spot.findAll({
         where: {
             ownerId: userId
@@ -112,7 +87,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const formattedResponse = {
         Spots: []
     }
-    
+
     spotsOwnedByUser.forEach(element => {
 
 
@@ -177,16 +152,22 @@ router.get('/:spotId', async (req, res, next) => {
       })
     //----------------------
 
-
-    spotDetails.dataValues.numReviews = spotDetails.dataValues.Reviews[0].dataValues.numReviews
-    spotDetails.dataValues.avgStarRating = spotDetails.dataValues.Reviews[0].dataValues.avgStarRating
-
+    if (spotDetails.dataValues.Reviews && spotDetails.dataValues.Reviews[0]){
+        spotDetails.dataValues.numReviews = spotDetails.dataValues.Reviews[0].dataValues.numReviews
+        spotDetails.dataValues.avgStarRating = spotDetails.dataValues.Reviews[0].dataValues.avgStarRating
+    }else{
+        spotDetails.dataValues.numReviews = 0;
+        spotDetails.dataValues.avgRating = null;
+    }
 
     //below is extra code done so that the body of the request matches the docs EXACTLY
-    spotDetails.dataValues.SpotImagesDeleteMe = spotDetails.dataValues.SpotImages
-    delete spotDetails.dataValues.SpotImages
-    spotDetails.dataValues.SpotImages = spotDetails.dataValues.SpotImagesDeleteMe
-    delete spotDetails.dataValues.SpotImagesDeleteMe
+    if(spotDetails.dataValues.SpotImages){
+        spotDetails.dataValues.SpotImagesDeleteMe = spotDetails.dataValues.SpotImages
+        delete spotDetails.dataValues.SpotImages
+        spotDetails.dataValues.SpotImages = spotDetails.dataValues.SpotImagesDeleteMe
+        delete spotDetails.dataValues.SpotImagesDeleteMe
+    }
+
     //-----------------------
 
     spotDetails.dataValues.Owner = spotDetails.dataValues.User
