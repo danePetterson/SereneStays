@@ -39,11 +39,15 @@ router.get('/', async (req, res, next) => {
     });
 
     allSpots.forEach(element => {
-       element.dataValues.avgRating = element.dataValues.Reviews[0].dataValues.avgRating;
-       element.dataValues.previewImage = element.dataValues.SpotImages[0].dataValues.url;
+        if (element.dataValues.Reviews && element.dataValues.Reviews[0]) {
+            element.dataValues.avgRating = element.dataValues.Reviews[0].dataValues.avgRating;
+            delete element.dataValues.Reviews;
+        }
 
-       delete element.dataValues.Reviews;
-       delete element.dataValues.SpotImages;
+        if (element.dataValues.SpotImages && element.dataValues.SpotImages[0]) {
+            element.dataValues.previewImage = element.dataValues.SpotImages[0].dataValues.url;
+            delete element.dataValues.SpotImages;
+        }
     });
 
     res.json(allSpots)
