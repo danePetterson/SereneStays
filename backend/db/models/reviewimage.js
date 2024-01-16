@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     reviewId: DataTypes.INTEGER
   }, {
     sequelize,
+    timestamps: false,
     modelName: 'ReviewImage',
   });
   return ReviewImage;
