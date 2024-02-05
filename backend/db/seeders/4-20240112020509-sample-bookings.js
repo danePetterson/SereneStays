@@ -20,8 +20,8 @@ module.exports = {
      * }], {});
     */
     options.tableName = 'Bookings'
-    
-   return queryInterface.bulkInsert(options, 'Bookings', [
+
+   await queryInterface.bulkInsert(options, 'Bookings', [
     {
       spotId: 1,
       userId: 1,

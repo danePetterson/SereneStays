@@ -22,7 +22,7 @@ module.exports = {
     */
     options.tableName = 'Users'
 
-   return queryInterface.bulkInsert(options, 'Users', [
+   await queryInterface.bulkInsert(options, 'Users', [
     {
       firstName: 'FirstUser',
       lastName: 'FirstLastname',
