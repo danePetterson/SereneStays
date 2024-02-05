@@ -438,7 +438,7 @@ router.get('/:spotId', async (req, res, next) => {
     delete spotDetails.dataValues.Reviews
     delete spotDetails.dataValues.User
 
-    //console.log(spotDetails.dataValues.Reviews)
+   // console.log(spotDetails.dataValues.Reviews)
 
     res.json(spotDetails)
 
