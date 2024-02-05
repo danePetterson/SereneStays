@@ -19,7 +19,9 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   queryInterface.bulkInsert('Reviews', [
+   options.tableName = 'Reviews'
+
+   return queryInterface.bulkInsert(options, 'Reviews', [
     {
       userId: 1,
       spotId: 1,

@@ -18,7 +18,10 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   queryInterface.bulkInsert('SpotImages', [
+
+    options.tableName = 'SpotImages'
+
+   return queryInterface.bulkInsert(options, 'SpotImages', [
     {
       url: 'www.google.com/images/someImage',
       preview: true,

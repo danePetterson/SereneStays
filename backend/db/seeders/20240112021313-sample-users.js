@@ -20,7 +20,9 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   queryInterface.bulkInsert('Users', [
+    options.tableName = 'Users'
+
+   return queryInterface.bulkInsert(options, 'Users', [
     {
       firstName: 'FirstUser',
       lastName: 'FirstLastname',
