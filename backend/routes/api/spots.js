@@ -306,7 +306,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 model: Review,
                 attributes: [
                     [
-                        sequelize.fn('AVG', sequelize.col('stars')), 'avgRating'
+                        sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'
                     ]
                 ]
             },
@@ -317,7 +317,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 limit: 1
             }
         ],
-        group: ['Spot.id']
+        group: ['Spot.id', 'Reviews.id']
     })
 
 
@@ -373,7 +373,7 @@ router.get('/:spotId', async (req, res, next) => {
             {
                 model: Review,
                 attributes:[[
-                    sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating'
+                    sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgStarRating'
                 ]]
             },
             {
@@ -445,7 +445,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
                 attributes: ['id', 'url']
             }
         ],
-        group: ['Review.id']
+        group: ['Review.id', 'User.id']
     })
 
     if(!reviews || !reviews[0]){
