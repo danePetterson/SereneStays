@@ -186,7 +186,7 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => 
             "message": "Review couldn't be found"
           })
     }
-    console.log(review.dataValues)
+    //console.log(review.dataValues)
     if(review && review.dataValues.User.dataValues.id != userId ){
 
        return res.status(403).json({

@@ -40,7 +40,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
             }
         ]
     })
-    console.log(imageOwner)
+    //console.log(imageOwner)
 
     if(!imageOwner){
         return res.status(404).json({

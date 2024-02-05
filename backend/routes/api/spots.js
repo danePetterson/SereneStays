@@ -366,8 +366,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
         formattedResponse.Spots.push(element)
 
     });
-    console.log(formattedResponse)
-    console.log(spotsOwnedByUser)
+    //console.log(formattedResponse)
+    //console.log(spotsOwnedByUser)
 
    res.json(formattedResponse)
 
@@ -408,7 +408,7 @@ router.get('/:spotId', async (req, res, next) => {
     })
 
     //not found error handle
-    console.log(spotDetails)
+    //console.log(spotDetails)
 
     if(!spotDetails.dataValues.id) return res.status(404).json({
         "message": "Spot couldn't be found"
@@ -438,7 +438,7 @@ router.get('/:spotId', async (req, res, next) => {
     delete spotDetails.dataValues.Reviews
     delete spotDetails.dataValues.User
 
-    console.log(spotDetails.dataValues.Reviews)
+    //console.log(spotDetails.dataValues.Reviews)
 
     res.json(spotDetails)
 
@@ -651,7 +651,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
     })
 
     if(hasUserReviewedSpot[0]){
-        console.log(hasUserReviewedSpot)
+        //console.log(hasUserReviewedSpot)
        return res.status(500).json({
             "message": "User already has a review for this spot"
           })

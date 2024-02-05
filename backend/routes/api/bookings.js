@@ -97,7 +97,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
     const bookingOwner = await Booking.findByPk(bookingId)
 
-    console.log(bookingOwner)
+    //console.log(bookingOwner)
 
     if(!bookingOwner){
         res.status(404).json({
