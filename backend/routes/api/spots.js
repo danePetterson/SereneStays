@@ -385,7 +385,7 @@ router.get('/:spotId', async (req, res, next) => {
                 attributes: ['id','firstName','lastName']
             }
         ],
-        group: ['Spot.id', 'Reviews.id', 'SpotImages.id']
+        group: ['Spot.id', 'Reviews.id', 'SpotImages.id', 'User.id']
     })
 
     //not found error handle
