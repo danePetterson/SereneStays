@@ -384,7 +384,8 @@ router.get('/:spotId', async (req, res, next) => {
                 model: User,
                 attributes: ['id','firstName','lastName']
             }
-        ]
+        ],
+        group: ['Spot.id']
     })
 
     //not found error handle
@@ -445,7 +446,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
                 attributes: ['id', 'url']
             }
         ],
-        group: ['Review.id', 'User.id']
+        group: ['Review.id', 'User.id', 'ReviewImages.id']
     })
 
     if(!reviews || !reviews[0]){

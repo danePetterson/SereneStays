@@ -79,7 +79,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 attributes: ['id', 'url']
             }
         ],
-        group: ['Review.id', 'User.id']
+        group: ['Review.id', 'User.id', 'Spot.id']
 
     })
 
