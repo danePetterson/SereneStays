@@ -21,7 +21,7 @@ module.exports = {
     */
     options.tableName = 'Bookings'
 
-   await queryInterface.bulkInsert(options, 'Bookings', [
+   await queryInterface.bulkInsert(options,[
     {
       spotId: 1,
       userId: 1,

@@ -21,7 +21,7 @@ module.exports = {
 
     options.tableName = 'SpotImages'
 
-   await queryInterface.bulkInsert(options, 'SpotImages', [
+   await queryInterface.bulkInsert(options,[
     {
       url: 'www.google.com/images/someImage',
       preview: true,
