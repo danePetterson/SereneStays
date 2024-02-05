@@ -69,7 +69,8 @@ router.get('/current', requireAuth, async (req, res, nest) => {
             element.dataValues.Spot.dataValues.previewImage = element.dataValues.Spot.dataValues.SpotImages[0].dataValues.url
             delete element.dataValues.Spot.dataValues.SpotImages
         }else {
-            
+            element.dataValues.Spot.dataValues.previewImage = null
+            delete element.dataValues.Spot.dataValues.SpotImages
         }
     });
 
