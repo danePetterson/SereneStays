@@ -13,6 +13,21 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 
+
+const validateReview = [
+    check("review")
+    .exists({checkFalsy: true})
+    .isLength({min: 1})
+    .withMessage("Review text is required"),
+
+    check("stars")
+    .exists({checkFalsy: true})
+    .isFloat({min: 1, max: 5})
+    .withMessage("Stars must be an integer from 1 to 5"),
+
+    handleValidationErrors
+]
+
 //-----------------------------------------------------------
 
 
@@ -103,6 +118,9 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
 
     const url = req.body.url
 
+    const userId = req.user.id
+
+
 
     const review = await Review.findByPk(reviewId, {
         include: [
@@ -118,6 +136,11 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
           })
     }
 
+    if(review.dataValues.userId != userId){
+        return res.status(403).json({
+            "message": "Forbidden"
+          })
+    }
 
     if(review && review.dataValues.ReviewImages.length >= 10){
        return res.status(403).json({
@@ -144,7 +167,7 @@ Require Authentication: true
 
 Require proper authorization: Review must belong to the current user */
 
-router.put('/:reviewId', requireAuth, async (req, res, next) => {
+router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => {
 
     const reviewId = req.params.reviewId
     const updateData = req.body
@@ -163,8 +186,8 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
             "message": "Review couldn't be found"
           })
     }
-
-    if(review && review.dataValues.User.dataValues.id === userId){
+    console.log(review.dataValues)
+    if(review && review.dataValues.User.dataValues.id != userId ){
 
        return res.status(403).json({
             "message": "Forbidden"
@@ -224,22 +247,23 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
             "message": "Review couldn't be found"
           })
     }
-    if(review && review.dataValues.User.dataValues.id === userId){
+    //console.log(review.dataValues)
+    if(review && review.dataValues.userId !== userId){
 
         return res.status(403).json({
              "message": "Forbidden"
            })
+     }else{
+
+        await Review.destroy({
+            where: {
+                id: reviewId
+            }
+         })
+         return res.json({
+            "message": "Successfully deleted"
+          })
      }
-
-     await Review.destroy({
-        where: {
-            id: reviewId
-        }
-     })
-
-     return res.json({
-        "message": "Successfully deleted"
-      })
 
 })
 
