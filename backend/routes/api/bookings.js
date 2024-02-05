@@ -55,7 +55,7 @@ router.get('/current', requireAuth, async (req, res, nest) => {
                 ]
             },
         ],
-        group: ['Booking.id']
+        group: ['Booking.id', 'Spot.id']
     })
 
 

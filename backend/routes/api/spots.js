@@ -391,7 +391,7 @@ router.get('/:spotId', async (req, res, next) => {
     //not found error handle
     //console.log(spotDetails)
 
-    if(!spotDetails.dataValues.id) return res.status(404).json({
+    if(!spotDetails || !spotDetails.dataValues || !spotDetails.dataValues.id) return res.status(404).json({
         "message": "Spot couldn't be found"
       })
     //----------------------
@@ -493,7 +493,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
                 spotId: spot
             },
             attributes: ['spotId', 'startDate', 'endDate'],
-            group: ['Booking.id']
+            group: ['Booking.id', 'User.id']
         })
 
         return res.json(allBookings)
@@ -511,7 +511,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
                     attributes: ['id','firstName','lastName']
                 }
             ],
-            group: ['Booking.id']
+            group: ['Booking.id', 'User.id']
         })
         return res.json(allBookings)
     }
