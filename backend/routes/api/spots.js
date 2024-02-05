@@ -145,7 +145,7 @@ router.get('/', getAllSpotsValidation, async (req, res, next) => {
                 model: Review,
                 attributes: [
                     [
-                        sequelize.fn('AVG', sequelize.col('stars')), 'avgRating'
+                        sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'
                     ]
                 ]
             },
@@ -162,7 +162,7 @@ router.get('/', getAllSpotsValidation, async (req, res, next) => {
             lng: { [Op.between]: [minLng, maxLng] },
             price: { [Op.between]: [minPrice, maxPrice] }
         },
-        group: ['Spot.id', 'Review.id'],
+        group: ['Spot.id', 'Reviews.id'],
         offset: ((page - 1) * size),
         subQuery: false,
         limit: size
